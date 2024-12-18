@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  income
+  expense
+}
+
+enum BudgetPeriod {
+  monthly
+  weekly
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  email String @unique
+
+  password String
+
+  role Role @default(USER)
+
+  transaction  Transaction[] 
+
+  budget Budget[]
+
+  saving Saving[]
+
+
+  @@map("users")
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+
+  type TransactionType 
+
+  amount Int
+
+  description String
+
+  category String
+
+  userId Int
+
+  user User@relation(fields: [userId], references: [id])
+
+  createdDate DateTime @default(now())
+
+  @@map("transactions")
+}
+
+model Budget {
+  id Int @id @default(autoincrement())
+
+  amount Int
+  
+  period BudgetPeriod
+
+  remainingAmount Int
+
+  userId Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("budgets")
+}
+
+model Saving {
+  id Int @id @default(autoincrement())
+
+  goalName String
+
+  targetAmount Int
+
+  savedAmount Int
+
+  deadline String
+
+  userId Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("savings")
+}
