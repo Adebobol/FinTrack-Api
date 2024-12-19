@@ -52,7 +52,7 @@ model User {
 model Transaction {
   id Int @id @default(autoincrement())
 
-  type TransactionType 
+  type TransactionType  @default(income)
 
   amount Int
 

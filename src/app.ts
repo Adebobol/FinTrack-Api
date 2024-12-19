@@ -17,7 +17,6 @@ app.use(express.json());
 app.use("/api/v1/transaction", transactionRoute);
 app.use("/api/v1/budget", budgetRoute);
 app.use("/api/v1/savings", savingRoute);
-app.use("/api/v1/transaction", authRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/auth", authRoute);
 

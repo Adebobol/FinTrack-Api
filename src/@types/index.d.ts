@@ -4,6 +4,18 @@ export interface User {
   password: string;
 }
 
+export interface TransactionCreation {
+  type: string;
+
+  amount: number;
+
+  description: string;
+
+  category: string;
+
+  userId: number;
+}
+
 declare global {
   namespace Express {
     export interface Request {
